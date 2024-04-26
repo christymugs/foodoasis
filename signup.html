@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Oasis</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<header class="header">
+    <a href="#" class="logo">
+        <i class="fa-light fa-plate-utensils"></i>
+    </a>
+    <h1 class="heading" id="heading" style="text-align: center;">Food <span> Oasis </span>
+    </h1>
+    <nav class="navbar">
+        <a href="index.html">Home</a>
+        <a href="googlemap.php">Browse Now</a>
+        <a href="login.html">Login</a>
+    </nav>
+    <div class="icons">
+        <div class="fas fa-bars" id="menu-btn"></div>
+    </div>
+</header>
+
+<body>
+    <div class="container">
+        <div class="left-content">
+            <i class="fa-solid fa-utensils" style="margin-left: 120px;"></i>
+            <h2>Join Today</h2>
+            <p>Register today to add your company to the best organic food finder.</p>
+        </div>
+        <div class="right-content">
+            <form action="vendorprofile.html" method="POST">
+                <div class="form-group">
+                    <label for="firstName">First Name:</label>
+                    <input type="text" id="firstName" name="firstName" required>
+                </div>
+                <div class="form-group">
+                    <label for="lastName">Last Name:</label>
+                    <input type="text" id="lastName" name="lastName" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password:</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="companyName">Company Name:</label>
+                    <input type="text" id="companyName" name="companyName">
+                </div>
+                <div class="form-group">
+                    <label for="address">Address:</label>
+                    <input type="text" id="address" name="address">
+                </div>
+                <div class="form-group">
+                    <label for="phoneNumber">Phone Number:</label>
+                    <input type="tel" id="phoneNumber" name="phoneNumber">
+                </div>
+                <div class="form-group">
+                    <label for="hours">Hours of Operations:</label>
+                    <input type="text" id="hours" name="hours">
+                </div>
+                <div class="form-group">
+                    <label for="socialMedia">Social Media:</label>
+                    <input type="text" id="socialMedia" name="socialMedia">
+                </div>
+                <div class="form-group">
+                    <label for="socialMedia">Description of your Company:</label>
+                    <input type="text" id="information" name="information">
+                </div>
+                <button type="submit">Register</button>
+            </form>
+            <p style="color: white; margin-top: 20px;">Already have an account? <a href="login.html">Login</a></p>
+        </div>
+    </div>
+    <footer>
+        <div class="footer-column">
+            <h3>Company</h3>
+            <ul>
+                <li>About us</li>
+                <li>Careers</li>
+                <li>Privacy Policy</li>
+                <li>Terms and Conditions</li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>Support</h3>
+            <ul>
+                <li>Signup Issues</li>
+                <li>Login Issues</li>
+                <li>Ordering</li>
+                <li>FAQ</li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>Locations</h3>
+            <ul>
+                <li>United States</li>
+                <li>Canada</li>
+                <li>Europe</li>
+                <li>Asia</li>
+            </ul>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+</body>
+
+</html>

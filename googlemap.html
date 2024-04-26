@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Oasis</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .marker-info {
+            box-sizing: border-box;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            /* Align button horizontally */
+            align-items: center;
+            /* Align button vertically */
+        }
+
+
+        .marker-info h3 {
+            text-align: center;
+            color: #000000;
+            font-size: 30px;
+        }
+
+        .marker-info p {
+            font-size: 16px;
+            color: black;
+        }
+
+        #details-container {
+            position: absolute;
+            top: 250px;
+            left: 20px;
+            width: calc(50% - 400px);
+            padding: 20px;
+            border: 1px solid #ccc;
+            z-index: 1000;
+            overflow: hidden;
+            word-wrap: break-word;
+            height: 400px;
+        }
+
+        #about-container {
+            position: absolute;
+            top: 250px;
+            right: 20px;
+            width: calc(50% - 400px);
+            padding: 20px;
+            border: 1px solid #ccc;
+            overflow: hidden;
+            word-wrap: break-word;
+            height: 400px;
+        }
+
+
+        #about-container h3,
+        #details-container h3,
+        #products-container h3 {
+            color: #689D38;
+            font-size: 40px;
+            text-align: center;
+        }
+
+        #about-container p,
+        #details-container p,
+        #products-container p {
+            color: black;
+            font-size: 30px;
+            text-align: center;
+        }
+
+        .products-container {
+            position: relative;
+            top: 90px;
+        }
+
+        .product-container {
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin-bottom: 20px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .product-container p {
+            margin: 0 0 10px;
+        }
+
+        .product-container img {
+            max-width: 100%;
+            display: block;
+            margin: 0 auto;
+        }
+
+
+
+        #company-name {
+            font-size: 50px;
+            text-align: center;
+            color: #689D38;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <a href="#" class="logo">
+            <i class="fa-light fa-plate-utensils"></i>
+        </a>
+        <h1 class="heading" id="heading" style="text-align: center;">Food <span> Oasis </span>
+        </h1>
+        <nav class="navbar">
+            <a href="index.html">Home</a>
+            <a href="signup.html">Signup</a>
+            <a href="login.html">Login</a>
+        </nav>
+        <div class="icons">
+            <div class="fas fa-bars" id="menu-btn"></div>
+        </div>
+    </header>
+    <div class="map-container">
+        <input id="pac-input" class="controls" type="text" placeholder="Search">
+        <div id="google-map" class="google-map"></div>
+        <h3 id="company-name"></h3>
+        <div class="zoom-range-container">
+            <input type="range" min="1" max="20" value="10" class="zoom-range" id="zoomRange">
+        </div>
+
+        <div id="details-container">
+            <h3>Company Information:</h3>
+            <p id="company-hours"></p>
+            <p id="company-phone"></p>
+            <p id="company-address"></p>
+            <p id="company-social"><a id="social-link" href="#" target="_blank"></a></p>
+        </div>
+
+        <div id="about-container">
+            <h3>About Vendor:</h3>
+            <p id="company-info"></p>
+        </div>
+        <div id="products-container">
+        </div>
+    </div>
+    <footer>
+        <div class="footer-column">
+            <h3>Company</h3>
+            <ul>
+                <li>About us</li>
+                <li>Careers</li>
+                <li>Privacy Policy</li>
+                <li>Terms and Conditions</li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>Support</h3>
+            <ul>
+                <li>Signup Issues</li>
+                <li>Login Issues</li>
+                <li>Ordering</li>
+                <li>FAQ</li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>Locations</h3>
+            <ul>
+                <li>United States</li>
+                <li>Canada</li>
+                <li>Europe</li>
+                <li>Asia</li>
+            </ul>
+        </div>
+    </footer>
+    <script>
+        function getDirections(latitude, longitude) {
+            window.open(`https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`);
+        }
+        function initMap() {
+            const map = new google.maps.Map(document.getElementById('google-map'), {
+                center: { lat: 33.7629768, lng: -84.4510441 },
+                zoom: 10,
+                disableDefaultUI: true,
+                styles: [
+                    {
+                        "featureType": "all",
+                        "elementType": "labels.text.fill",
+                        "stylers": [
+                            {
+                                "saturation": 36
+                            },
+                            {
+                                "color": "#000000"
+                            },
+                            {
+                                "lightness": 40
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "all",
+                        "elementType": "labels.text.stroke",
+                        "stylers": [
+                            {
+                                "visibility": "on"
+                            },
+                            {
+                                "color": "#000000"
+                            },
+                            {
+                                "lightness": 16
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "all",
+                        "elementType": "labels.icon",
+                        "stylers": [
+                            {
+                                "visibility": "off"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "administrative",
+                        "elementType": "geometry.fill",
+                        "stylers": [
+                            {
+                                "color": "#000000"
+                            },
+                            {
+                                "lightness": 20
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "administrative",
+                        "elementType": "geometry.stroke",
+                        "stylers": [
+                            {
+                                "color": "#000000"
+                            },
+                            {
+                                "lightness": 17
+                            },
+                            {
+                                "weight": 1.2
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "landscape",
+                        "elementType": "geometry",
+                        "stylers": [
+                            {
+                                "color": "#000000"
+                            },
+                            {
+                                "lightness": 20
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "poi",
+                        "elementType": "geometry",
+                        "stylers": [
+                            {
+                                "color": "#000000"
+                            },
+                            {
+                                "lightness": 21
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "road.highway",
+                        "elementType": "geometry.fill",
+                        "stylers": [
+                            {
+                                "color": "#000000"
+                            },
+                            {
+                                "lightness": 17
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "road.highway",
+                        "elementType": "geometry.stroke",
+                        "stylers": [
+                            {
+                                "color": "#000000"
+                            },
+                            {
+                                "lightness": 29
+                            },
+                            {
+                                "weight": 0.2
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "road.arterial",
+                        "elementType": "geometry",
+                        "stylers": [
+                            {
+                                "color": "#000000"
+                            },
+                            {
+                                "lightness": 18
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "road.local",
+                        "elementType": "geometry",
+                        "stylers": [
+                            {
+                                "color": "#000000"
+                            },
+                            {
+                                "lightness": 16
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "transit",
+                        "elementType": "geometry",
+                        "stylers": [
+                            {
+                                "color": "#000000"
+                            },
+                            {
+                                "lightness": 19
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "water",
+                        "elementType": "geometry",
+                        "stylers": [
+                            {
+                                "color": "#000000"
+                            },
+                            {
+                                "lightness": 17
+                            }
+                        ]
+                    }
+                ]
+            });
+            const markers = [
+                {
+                    latitude: 33.7344,
+                    longitude: -84.3698,
+                    company_name: "Grant Park Farmers Market",
+                    address: "456 Grant Park Ave, Atlanta, GA",
+                    information: "Community-focused market offering organic produce.",
+                    hours_of_operations: "Sunday: 9am-1pm",
+                    phone_number: "456-789-0123",
+                    social_media: "http://www.grantparkmarket.org"
+                },
+                {
+                    latitude: 33.7408,
+                    longitude: -84.3445,
+                    company_name: "East Atlanta Village Farmers Market",
+                    information: "Supporting local farmers and food artisans.",
+                    address: "789 East Atlanta St, Atlanta, GA",
+                    hours_of_operations: "Thursday: 4pm-8pm",
+                    phone_number: "789-012-3456",
+                    social_media: "http://www.eastatlantafarmersmarket.com"
+                },
+                {
+                    latitude: 33.7126,
+                    longitude: -84.1056,
+                    company_name: "Lithonia Farmers Market",
+                    information: "Discover fresh produce and foodie delights at our monthly market.",
+                    address: "6290 Main Street, Lithonia, GA 30058",
+                    hours_of_operations: "3rd Saturday of the month: 12pm-4pm",
+                    phone_number: "123-456-7890",
+                    social_media: "http://www.lithoniamarket.com"
+                },
+                {
+                    latitude: 33.8076,
+                    longitude: -84.1727,
+                    company_name: "Stone Mountain Farmers Market",
+                    information: "Join us for a selection of local favorites and artisan goods.",
+                    address: "922 Main Street, Stone Mountain, GA 30083",
+                    hours_of_operations: "Tuesday: 4pm-7pm",
+                    phone_number: "456-789-0123",
+                    social_media: "http://www.stonemountainmarket.com"
+                },
+                {
+                    latitude: 33.8559,
+                    longitude: -84.2095,
+                    company_name: "Tucker Farmers Market",
+                    information: "Support local farmers and artisans at our weekly market.",
+                    address: "4882 Lavista Rd, Tucker, GA 30084",
+                    hours_of_operations: "Thursday: 4pm-8pm",
+                    phone_number: "789-012-3456",
+                    social_media: "http://www.tuckermarket.com"
+                },
+                {
+                    latitude: 34.0756,
+                    longitude: -84.2959,
+                    company_name: "Alpharetta Farmers Market",
+                    information: "Experience the community gathering and fresh produce offerings.",
+                    address: "1 South Main, Alpharetta, GA 30009",
+                    hours_of_operations: "Saturday: 8:30am-1pm",
+                    phone_number: "123-456-7890",
+                    social_media: "http://www.alpharettafarmersmarket.com"
+                },
+                {
+                    latitude: 33.7255,
+                    longitude: -84.4125,
+                    company_name: "Aluma Farm Farmstand",
+                    information: "Find a variety of organic produce and foodie delights at our weekly farmstand.",
+                    address: "1150 Allene Avenue SW, Atlanta, GA 30310",
+                    hours_of_operations: "Thursday: 4pm-8pm",
+                    phone_number: "456-789-0123",
+                    social_media: "http://www.alumafarm.com"
+                },
+                {
+                    latitude: 33.8016,
+                    longitude: -84.4508,
+                    company_name: "Bolton Road Farmers Market",
+                    information: "Join us for a selection of local favorites and foodie delights.",
+                    address: "2081 Bolton Road NW, Atlanta, GA 30318",
+                    hours_of_operations: "Sunday: 11am-2pm",
+                    phone_number: "789-012-3456",
+                    social_media: "http://www.boltonroadmarket.com"
+                },
+                {
+                    latitude: 33.935,
+                    longitude: -84.2878,
+                    company_name: "Dunwoody Farmers Market",
+                    information: "Experience the community gathering and fresh produce offerings.",
+                    address: "4770 N. Peachtree Road, Dunwoody, GA 30338",
+                    hours_of_operations: "Saturday: 8:30am-1pm",
+                    phone_number: "123-456-7890",
+                    social_media: "http://www.dunwoodyfarmersmarket.com"
+                },
+                {
+                    latitude: 33.6807,
+                    longitude: -84.4392,
+                    company_name: "East Point Farmers Market",
+                    information: "Experience the community gathering and fresh produce offerings.",
+                    address: "2757 East Point St, East Point, GA 30344",
+                    hours_of_operations: "Wednesday: 4pm-7pm",
+                    phone_number: "456-789-0123",
+                    social_media: "http://www.eastpointmarket.com"
+                },
+            ];
+
+            markers.forEach(markerInfo => {
+                const marker = new google.maps.Marker({
+                    position: { lat: markerInfo.latitude, lng: markerInfo.longitude },
+                    map: map,
+                    title: markerInfo.company_name
+                });
+
+                marker.addListener('click', function () {
+                    document.getElementById('company-name').innerText = markerInfo.company_name;
+                    document.getElementById('company-info').innerText = markerInfo.information;
+                    document.getElementById('company-address').innerText = markerInfo.address; // Change this line
+                    document.getElementById('company-hours').innerText = markerInfo.hours_of_operations;
+                    document.getElementById('company-phone').innerText = markerInfo.phone_number;
+
+                    const socialLink = document.getElementById('social-link');
+                    socialLink.innerText = 'Visit our Social Media';
+                    socialLink.href = markerInfo.social_media;
+                    socialLink.target = '_blank';
+                });
+            });
+
+            const zoomRangeInput = document.getElementById('zoomRange');
+
+            zoomRangeInput.addEventListener('input', function () {
+                const zoomLevel = parseInt(this.value);
+                map.setZoom(zoomLevel);
+            });
+
+            const infoWindow = new google.maps.InfoWindow({
+                minWidth: 200,
+                maxWidth: 200
+            });
+
+            const input = document.getElementById('pac-input');
+            const searchBox = new google.maps.places.SearchBox(input);
+            map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+            map.addListener('bounds_changed', function () {
+                searchBox.setBounds(map.getBounds());
+            });
+            let usersArray = [];
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    const userLatLng = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+
+                    const userMarkerIcon = {
+                        url: 'http://maps.gstatic.com/mapfiles/ms2/micons/man.png',
+                        scaledSize: new google.maps.Size(50, 50)
+                    };
+
+                    const userMarker = new google.maps.Marker({
+                        position: userLatLng,
+                        map: map,
+                        title: 'Your Location',
+                        icon: userMarkerIcon
+                    });
+                    usersArray.push(userMarker);
+                    userMarker.addListener('click', function () {
+                        const contentString = `
+                            <div>
+                                <h3 style="color:#689D38; text-align:center; font-size:24px">Your Location</h3>
+                            </div>
+                        `;
+                        infoWindow.setContent(contentString);
+                        infoWindow.open(map, this);
+                    });
+                }, function () {
+                    handleLocationError(true, infoWindow, map.getCenter());
+                });
+            } else {
+                handleLocationError(false, infoWindow, map.getCenter());
+            }
+
+            searchBox.addListener('places_changed', function () {
+                const places = searchBox.getPlaces();
+
+                if (places.length == 0) {
+                    return;
+                }
+
+                usersArray.forEach(function (user) {
+                    user.setMap(null);
+                });
+                usersArray = [];
+
+                const bounds = new google.maps.LatLngBounds();
+                places.forEach(function (place) {
+                    if (!place.geometry) {
+                        console.log("Returned place contains no geometry");
+                        return;
+                    }
+
+                    const marker = new google.maps.Marker({
+                        map: map,
+                        title: place.name,
+                        position: place.geometry.location
+                    });
+
+                    marker.addListener('click', function () {
+                        const contentString = `
+                            <div class="marker-info">
+                                <button onclick="getDirections(${place.geometry.location.lat()}, ${place.geometry.location.lng()})">Get Directions</button>
+                            </div>
+                        `;
+                        infoWindow.setContent(contentString);
+                        infoWindow.open(map, marker);
+                    });
+
+                    usersArray.push(marker);
+
+                    if (place.geometry.viewport) {
+                        bounds.union(place.geometry.viewport);
+                    } else {
+                        bounds.extend(place.geometry.location);
+                    }
+                });
+                map.fitBounds(bounds);
+            });
+
+            window.getDirections = function (latitude, longitude) {
+                window.open(`https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`);
+            };
+        }
+
+    </script>
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBGLIkUoW92Cqv25JdJ_4333JypQBCryVc&libraries=places&callback=initMap"
+        defer></script>
+    <script src="script.js" defer></script>
+</body>
+
+</html>
