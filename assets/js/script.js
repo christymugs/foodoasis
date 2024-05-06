@@ -138,6 +138,9 @@ window.addEventListener("scroll", function () {
     }
 });
 
+/**
+ * Function to handle mouseover and mouseout events on slider buttons
+ */
 addEventOnElements([heroSliderNextBtn, heroSliderPrevBtn], "mouseover", handleSliderButtonHover);
 addEventOnElements([heroSliderNextBtn, heroSliderPrevBtn], "mouseout", autoSlide);
 
